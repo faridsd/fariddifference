@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farid Logicom Difference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F5F3ED;
+    --panel: #FFFFFF;
+    --panel-soft: #FAF8F2;
+    --ink: #211F1B;
+    --ink-soft: #6C6455;
+    --line: #E3DDCC;
+    --green: #3F6B4F;
+    --green-deep: #325740;
+    --green-tint: #E3EDE5;
+    --navy: #22333B;
+    --warn: #B5651D;
+    --warn-tint: #FBE9D6;
+    --danger: #A6402E;
+    --shadow: 0 1px 2px rgba(33,31,27,0.06), 0 6px 20px rgba(33,31,27,0.06);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #16150F;
+      --panel: #1E1C15;
+      --panel-soft: #24221A;
+      --ink: #ECE8DA;
+      --ink-soft: #A79E8B;
+      --line: #34302250;
+      --green: #6FA37F;
+      --green-deep: #8CBF9C;
+      --green-tint: #1E2A20;
+      --navy: #B9C7CC;
+      --warn: #D98A44;
+      --warn-tint: #33240F;
+      --danger: #D87A65;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #16150F;
+    --panel: #1E1C15;
+    --panel-soft: #24221A;
+    --ink: #ECE8DA;
+    --ink-soft: #A79E8B;
+    --line: #34302250;
+    --green: #6FA37F;
+    --green-deep: #8CBF9C;
+    --green-tint: #1E2A20;
+    --navy: #B9C7CC;
+    --warn: #D98A44;
+    --warn-tint: #33240F;
+    --danger: #D87A65;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', ui-sans-serif, system-ui, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Space Grotesk', 'Inter', sans-serif; }
+  .wrap{ max-width:760px; margin:0 auto; padding:28px 18px 80px; }
+
+  header.top{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:16px; flex-wrap:wrap; margin-bottom:22px;
+    border-bottom:1px solid var(--line); padding-bottom:18px;
+  }
+  header.top .title{ display:flex; align-items:center; gap:12px; }
+  header.top .title .mark{
+    width:40px;height:40px;border-radius:10px;background:var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:19px;
+    flex-shrink:0; box-shadow:var(--shadow); color:#fff;
+  }
+  header.top h1{ font-size:20px; font-weight:700; margin:0; letter-spacing:-0.01em; }
+  header.top p{ margin:2px 0 0; color:var(--ink-soft); font-size:13px; }
+  .top-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  button{ font-family:inherit; cursor:pointer; }
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:10px; font-size:13.5px; font-weight:600;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{ box-shadow:var(--shadow); }
+  .btn:active{ transform:scale(0.97); }
+  .btn.primary{ background:var(--green); border-color:var(--green); color:#fff; }
+  .btn.primary:hover{ background:var(--green-deep); border-color:var(--green-deep); }
+  .btn.ghost{ background:transparent; border-color:transparent; color:var(--ink-soft); padding:9px 10px; }
+  .btn.ghost:hover{ background:var(--panel-soft); color:var(--ink); }
+  .btn:disabled{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
+  .btn.small{ padding:6px 10px; font-size:12.5px; border-radius:8px; }
+  .btn.danger-outline{ color:var(--danger); border-color:var(--danger); background:transparent; }
+  .btn.big{ padding:16px; font-size:15.5px; width:100%; justify-content:center; border-radius:12px; }
+
+  .today-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; box-shadow:var(--shadow); margin-bottom:18px;
+  }
+  .today-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:6px; }
+  .today-head .date{ font-size:16.5px; font-weight:700; }
+  .today-head .curr-edit{ font-size:12px; color:var(--ink-soft); display:flex; align-items:center; gap:6px; }
+  .today-head .curr-edit input{
+    width:52px; border:1px solid var(--line); border-radius:6px; padding:3px 6px;
+    font-size:12px; background:var(--panel-soft); color:var(--ink); font-family:inherit;
+  }
+
+  .add-form{ display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .add-form input[type="text"]{
+    flex:2; min-width:140px; padding:11px 12px; border-radius:10px; border:1px solid var(--line);
+    background:var(--panel-soft); color:var(--ink); font-size:14px; font-family:inherit;
+  }
+  .add-form input[type="number"]{
+    flex:1; min-width:90px; padding:11px 12px; border-radius:10px; border:1px solid var(--line);
+    background:var(--panel-soft); color:var(--ink); font-size:14px; font-family:inherit;
+  }
+  .add-form input:focus{ outline:2px solid var(--green); outline-offset:1px; }
+
+  .entry-list{ display:flex; flex-direction:column; margin-bottom:12px; }
+  .entry-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 2px; border-top:1px solid var(--line);
+  }
+  .entry-row:first-child{ border-top:none; }
+  .entry-row .desc{ font-size:14px; }
+  .entry-row .right{ display:flex; align-items:center; gap:10px; }
+  .entry-row .price{ font-weight:700; font-family:'Space Grotesk', sans-serif; }
+  .entry-row .del{
+    border:none; background:none; color:var(--ink-soft); font-size:15px; padding:2px 4px; border-radius:6px;
+  }
+  .entry-row .del:hover{ color:var(--danger); background:var(--panel-soft); }
+
+  .no-entries{ color:var(--ink-soft); font-size:13.5px; padding:14px 2px; text-align:center; }
+
+  .subtotal-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:12px; border-top:1px solid var(--line); font-size:14px; margin-bottom:14px;
+  }
+  .subtotal-row .amt{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:19px; }
+
+  .status-strip{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--panel-soft); border-radius:10px; padding:10px 12px; margin-bottom:14px;
+    font-size:12.5px; color:var(--ink-soft); flex-wrap:wrap;
+  }
+  .status-strip.done{ background:var(--green-tint); color:var(--green-deep); font-weight:600; }
+  .status-strip.stale{ background:var(--warn-tint); color:var(--warn); font-weight:600; }
+
+  .history{
+    margin-top:24px; border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--panel); overflow:hidden;
+  }
+  .history summary{
+    padding:14px 18px; cursor:pointer; font-weight:600; font-size:13.5px; list-style:none;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .history summary::-webkit-details-marker{ display:none; }
+  .day-row{
+    padding:12px 18px; border-top:1px solid var(--line);
+  }
+  .day-row-head{ display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:10px; }
+  .day-row-head .d-date{ font-weight:600; font-size:13.5px; }
+  .day-row-head .d-meta{ font-size:12px; color:var(--ink-soft); }
+  .day-row-head .d-total{ font-family:'Space Grotesk', sans-serif; font-weight:700; }
+  .day-detail{ display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); }
+  .day-detail.show{ display:block; }
+  .day-detail .drow{ display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:var(--ink); }
+  .no-history{ padding:16px 18px; color:var(--ink-soft); font-size:13px; }
+  .tag-ok{ color:var(--green-deep); }
+  .tag-warn{ color:var(--warn); }
+  .tag-none{ color:var(--ink-soft); }
+
+  .overlay{
+    position:fixed; inset:0; background:rgba(23,21,18,0.5); display:none;
+    align-items:center; justify-content:center; padding:20px; z-index:50;
+  }
+  .overlay.show{ display:flex; }
+  .modal{
+    background:var(--panel); border-radius:16px; padding:24px; width:100%; max-width:400px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3); text-align:center;
+  }
+  .modal h2{ margin:0 0 4px; font-size:16px; color:var(--ink-soft); font-weight:600; }
+  .modal .big-total{ font-family:'Space Grotesk', sans-serif; font-size:42px; font-weight:700; margin:10px 0 4px; color:var(--green-deep); }
+  .modal .sub{ color:var(--ink-soft); font-size:13px; margin:0 0 18px; }
+  .modal-actions{ display:flex; gap:8px; justify-content:center; }
+
+  .backup-modal{ text-align:left; max-width:440px; }
+  textarea.databox{
+    width:100%; min-height:160px; font-family:ui-monospace, monospace; font-size:12px;
+    padding:10px; border-radius:9px; border:1px solid var(--line); background:var(--panel-soft); color:var(--ink);
+  }
+
+  .toast-wrap{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; gap:8px; z-index:60; width:min(360px, calc(100vw - 32px));
+  }
+  .toast{
+    background:var(--navy); color:#fff; padding:12px 16px; border-radius:10px;
+    font-size:13.5px; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,0.25); animation:rise .18s ease;
+  }
+  .toast.good{ background:var(--green); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title">
+      <div class="mark">🧾</div>
+      <div>
+        <h1>Farid Logicom Difference</h1>
+        <p>Items sold today that can't go into DELFIV — tallied for the register log</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost" id="undoBtn" title="Undo the last action" disabled>↺ Undo</button>
+      <button class="btn ghost" id="backupBtn">Backup</button>
+    </div>
+  </header>
+
+  <div class="today-card">
+    <div class="today-head">
+      <div class="date" id="todayDateLabel"></div>
+      <div class="curr-edit">Currency <input type="text" id="currencyInput" maxlength="6"></div>
+    </div>
+
+    <form class="add-form" id="addForm">
+      <input type="text" id="descInput" placeholder="What was sold" required>
+      <input type="number" id="priceInput" placeholder="Price" step="0.01" min="0" required>
+      <button type="submit" class="btn primary">Add</button>
+    </form>
+
+    <div class="entry-list" id="entryList"></div>
+
+    <div class="subtotal-row">
+      <span>Today's total</span>
+      <span class="amt" id="subtotalAmt">0</span>
+    </div>
+
+    <div class="status-strip" id="statusStrip"></div>
+
+    <button class="btn big primary" id="calcAllBtn">Calculate all</button>
+  </div>
+
+  <details class="history">
+    <summary><span>Previous days</span><span id="histCount" style="color:var(--ink-soft); font-weight:500;"></span></summary>
+    <div id="historyBody"></div>
+  </details>
+</div>
+
+<!-- calculation result modal -->
+<div class="overlay" id="resultOverlay">
+  <div class="modal">
+    <h2 id="resultDate">Today's total</h2>
+    <div class="big-total" id="resultTotal">0</div>
+    <p class="sub">Write this into the register log now. It's saved here too.</p>
+    <div class="modal-actions">
+      <button class="btn primary" id="resultDoneBtn">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- backup modal -->
+<div class="overlay" id="backupOverlay">
+  <div class="modal backup-modal">
+    <h2 style="text-align:left; color:var(--ink);">Backup your data</h2>
+    <p class="sub" style="text-align:left;">Copy this text and save it somewhere safe. Paste it back and press Restore to bring it back.</p>
+    <textarea class="databox" id="backupBox"></textarea>
+    <div class="modal-actions" style="justify-content:flex-end; margin-top:12px;">
+      <button class="btn ghost" id="closeBackupBtn">Close</button>
+      <button class="btn small" id="selectAllBtn">Select all</button>
+      <button class="btn primary" id="restoreBtn">Restore</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var STORAGE_KEY = "faridLogicomDifference_v1";
+  var state = { entries: [], calcEvents: [], settings: { currency: "DA" } };
+  var lastSnapshot = null;
+
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  function dateKey(d){ d = d || new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+  function todayKey(){ return dateKey(new Date()); }
+  function uid(){ return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        var parsed = JSON.parse(raw);
+        if(parsed && Array.isArray(parsed.entries)){
+          state = parsed;
+          if(!Array.isArray(state.calcEvents)) state.calcEvents = [];
+          if(!state.settings) state.settings = { currency: "DA" };
+        }
+      }
+    }catch(e){ console.error("Load failed", e); }
+  }
+
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch(e){ console.error("Save failed", e); toast("Couldn't save — storage may be full", false); }
+  }
+
+  function snapshot(){
+    lastSnapshot = JSON.parse(JSON.stringify(state));
+    document.getElementById('undoBtn').disabled = false;
+  }
+
+  function undo(){
+    if(!lastSnapshot) return;
+    state = lastSnapshot;
+    lastSnapshot = null;
+    save(); render();
+    document.getElementById('undoBtn').disabled = true;
+    toast("Last action undone", false);
+  }
+
+  function toast(msg, good){
+    var wrap = document.getElementById('toastWrap');
+    var t = document.createElement('div');
+    t.className = 'toast' + (good ? ' good' : '');
+    t.textContent = msg;
+    wrap.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 3600);
+  }
+
+  function money(n){
+    var v = Math.round(n * 100) / 100;
+    var s = v.toFixed(2);
+    if(s.endsWith('.00')) s = s.slice(0, -3);
+    return s + ' ' + state.settings.currency;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function fmtTime(ts){
+    var d = new Date(ts);
+    return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+  function fmtDateLong(key){
+    var parts = key.split('-').map(Number);
+    var d = new Date(parts[0], parts[1]-1, parts[2]);
+    return d.toLocaleDateString(undefined, {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  }
+  function fmtDateShort(key){
+    var parts = key.split('-').map(Number);
+    var d = new Date(parts[0], parts[1]-1, parts[2]);
+    return d.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
+  }
+
+  function dayStatus(dateKeyStr){
+    var dayEntries = state.entries.filter(function(e){ return e.date === dateKeyStr; });
+    var sum = dayEntries.reduce(function(a,e){ return a + e.price; }, 0);
+    var calcs = state.calcEvents.filter(function(c){ return c.date === dateKeyStr; });
+    var lastCalc = calcs.length ? calcs.reduce(function(a,b){ return b.ts > a.ts ? b : a; }) : null;
+    var stale = lastCalc ? dayEntries.some(function(e){ return e.ts > lastCalc.ts; }) : false;
+    return {
+      entries: dayEntries,
+      sum: sum,
+      calculated: !!lastCalc,
+      calculatedAt: lastCalc ? lastCalc.ts : null,
+      calculatedTotal: lastCalc ? lastCalc.total : null,
+      stale: stale
+    };
+  }
+
+  // ---------- actions ----------
+
+  function addEntry(desc, price){
+    snapshot();
+    state.entries.push({ id: uid(), desc: desc, price: price, date: todayKey(), ts: Date.now() });
+    save(); render();
+  }
+
+  function deleteEntry(id){
+    snapshot();
+    state.entries = state.entries.filter(function(e){ return e.id !== id; });
+    save(); render();
+  }
+
+  function calculateAll(){
+    var key = todayKey();
+    var status = dayStatus(key);
+    if(status.entries.length === 0){
+      toast("Nothing to calculate yet today", false);
+      return;
+    }
+    snapshot();
+    state.calcEvents.push({ date: key, total: status.sum, ts: Date.now() });
+    save(); render();
+
+    document.getElementById('resultDate').textContent = fmtDateLong(key);
+    document.getElementById('resultTotal').textContent = money(status.sum);
+    document.getElementById('resultOverlay').classList.add('show');
+  }
+
+  function deleteDay(key){
+    if(!confirm("Delete all of " + fmtDateShort(key) + "'s records? This can't be undone from history.")) return;
+    snapshot();
+    state.entries = state.entries.filter(function(e){ return e.date !== key; });
+    state.calcEvents = state.calcEvents.filter(function(c){ return c.date !== key; });
+    save(); render();
+  }
+
+  // ---------- rendering ----------
+
+  function render(){
+    document.getElementById('todayDateLabel').textContent = fmtDateLong(todayKey());
+    document.getElementById('currencyInput').value = state.settings.currency;
+
+    var status = dayStatus(todayKey());
+
+    var list = document.getElementById('entryList');
+    if(status.entries.length === 0){
+      list.innerHTML = '<div class="no-entries">Nothing logged yet today</div>';
+    } else {
+      list.innerHTML = status.entries.slice().reverse().map(function(e){
+        return '<div class="entry-row">' +
+          '<span class="desc">'+escapeHtml(e.desc)+'</span>' +
+          '<span class="right"><span class="price">'+money(e.price)+'</span>' +
+          '<button class="del" data-del="'+e.id+'" title="Remove">✕</button></span>' +
+        '</div>';
+      }).join('');
+    }
+
+    document.getElementById('subtotalAmt').textContent = money(status.sum);
+
+    var strip = document.getElementById('statusStrip');
+    if(!status.calculated){
+      strip.className = 'status-strip';
+      strip.innerHTML = '<span>Not yet counted for the register</span>';
+    } else if(status.stale){
+      strip.className = 'status-strip stale';
+      strip.innerHTML = '<span>New items added since last count (' + money(status.calculatedTotal) + ' at ' + fmtTime(status.calculatedAt) + ') — recalculate</span>';
+    } else {
+      strip.className = 'status-strip done';
+      strip.innerHTML = '<span>Counted: ' + money(status.calculatedTotal) + ' at ' + fmtTime(status.calculatedAt) + '</span>';
+    }
+
+    document.getElementById('calcAllBtn').textContent = status.calculated ? 'Recalculate all' : 'Calculate all';
+
+    renderHistory();
+  }
+
+  function renderHistory(){
+    var body = document.getElementById('historyBody');
+    var countLabel = document.getElementById('histCount');
+    var today = todayKey();
+
+    var keys = {};
+    state.entries.forEach(function(e){ if(e.date !== today) keys[e.date] = true; });
+    state.calcEvents.forEach(function(c){ if(c.date !== today) keys[c.date] = true; });
+    var days = Object.keys(keys).sort().reverse();
+
+    if(days.length === 0){
+      body.innerHTML = '<div class="no-history">No previous days yet</div>';
+      countLabel.textContent = '';
+      return;
+    }
+    countLabel.textContent = days.length + ' day' + (days.length>1?'s':'');
+
+    body.innerHTML = days.map(function(key){
+      var s = dayStatus(key);
+      var tagClass = !s.calculated ? 'tag-none' : (s.stale ? 'tag-warn' : 'tag-ok');
+      var tagText = !s.calculated ? 'not counted' : (s.stale ? 'changed after count' : 'counted');
+      var detailRows = s.entries.slice().reverse().map(function(e){
+        return '<div class="drow"><span>'+escapeHtml(e.desc)+' <span style="color:var(--ink-soft);">· '+fmtTime(e.ts)+'</span></span><span>'+money(e.price)+'</span></div>';
+      }).join('') || '<div class="drow" style="color:var(--ink-soft);">No items recorded</div>';
+
+      return '<div class="day-row">' +
+        '<div class="day-row-head" data-toggle="'+key+'">' +
+          '<div><div class="d-date">'+fmtDateShort(key)+'</div><div class="d-meta">'+s.entries.length+' item'+(s.entries.length!==1?'s':'')+' · <span class="'+tagClass+'">'+tagText+'</span></div></div>' +
+          '<div style="display:flex; align-items:center; gap:10px;"><span class="d-total">'+money(s.calculated ? s.calculatedTotal : s.sum)+'</span>' +
+          '<button class="btn ghost small" data-delday="'+key+'">Delete</button></div>' +
+        '</div>' +
+        '<div class="day-detail" id="detail-'+key+'">'+detailRows+'</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ---------- events ----------
+
+  document.getElementById('addForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var desc = document.getElementById('descInput').value.trim();
+    var price = parseFloat(document.getElementById('priceInput').value);
+    if(!desc){ toast("Add a description", false); return; }
+    if(isNaN(price) || price < 0){ toast("Enter a valid price", false); return; }
+    addEntry(desc, price);
+    document.getElementById('descInput').value = '';
+    document.getElementById('priceInput').value = '';
+    document.getElementById('descInput').focus();
+  });
+
+  document.getElementById('entryList').addEventListener('click', function(e){
+    var delBtn = e.target.closest('[data-del]');
+    if(delBtn) deleteEntry(delBtn.getAttribute('data-del'));
+  });
+
+  document.getElementById('calcAllBtn').addEventListener('click', calculateAll);
+  document.getElementById('undoBtn').addEventListener('click', undo);
+
+  document.getElementById('resultDoneBtn').addEventListener('click', function(){
+    document.getElementById('resultOverlay').classList.remove('show');
+  });
+  document.getElementById('resultOverlay').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('show');
+  });
+
+  document.getElementById('currencyInput').addEventListener('change', function(){
+    var v = this.value.trim() || 'DA';
+    state.settings.currency = v;
+    save(); render();
+  });
+
+  document.getElementById('historyBody').addEventListener('click', function(e){
+    var delDayBtn = e.target.closest('[data-delday]');
+    if(delDayBtn){ deleteDay(delDayBtn.getAttribute('data-delday')); return; }
+    var head = e.target.closest('[data-toggle]');
+    if(head){
+      var key = head.getAttribute('data-toggle');
+      var d = document.getElementById('detail-'+key);
+      if(d) d.classList.toggle('show');
+    }
+  });
+
+  // backup
+  document.getElementById('backupBtn').addEventListener('click', function(){
+    document.getElementById('backupBox').value = JSON.stringify(state, null, 2);
+    document.getElementById('backupOverlay').classList.add('show');
+  });
+  document.getElementById('closeBackupBtn').addEventListener('click', function(){
+    document.getElementById('backupOverlay').classList.remove('show');
+  });
+  document.getElementById('backupOverlay').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('show');
+  });
+  document.getElementById('selectAllBtn').addEventListener('click', function(){
+    var box = document.getElementById('backupBox');
+    box.focus(); box.select();
+    try{ document.execCommand('copy'); toast('Copied to clipboard', true); }
+    catch(e){ toast('Selected — copy with Ctrl/Cmd+C', false); }
+  });
+  document.getElementById('restoreBtn').addEventListener('click', function(){
+    var text = document.getElementById('backupBox').value;
+    try{
+      var parsed = JSON.parse(text);
+      if(!parsed || !Array.isArray(parsed.entries)) throw new Error('bad shape');
+      snapshot();
+      state = parsed;
+      if(!Array.isArray(state.calcEvents)) state.calcEvents = [];
+      if(!state.settings) state.settings = { currency: "DA" };
+      save(); render();
+      document.getElementById('backupOverlay').classList.remove('show');
+      toast('Data restored', true);
+    }catch(e){ toast("That doesn't look like valid backup text", false); }
+  });
+
+  load();
+  render();
+
+  // keep the date label fresh if the page is left open past midnight
+  setInterval(function(){
+    if(document.getElementById('todayDateLabel').textContent !== fmtDateLong(todayKey())) render();
+  }, 60000);
+})();
+</script>
+</body>
+</html>
